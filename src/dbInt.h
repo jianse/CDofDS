@@ -5,6 +5,9 @@
  *      Author: lee
  */
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 #ifndef true
 #define true 1
 #endif

@@ -21,7 +21,7 @@
  */
 typedef enum vtype Type;
 
-typedef struct field Field ;
+typedef struct ifield Field ;
 
 String getName(Field field);
 

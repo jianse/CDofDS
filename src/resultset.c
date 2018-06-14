@@ -14,7 +14,7 @@
 
 typedef struct resultset ResultSet;
 
-typedef struct resultset {
+struct resultset {
 	Field * fields;
 
 };
@@ -25,7 +25,7 @@ typedef struct resultset {
  * @return 没有下一条记录时返回flase
  */
 bool next(ResultSet rs) {
-	//TODO: Finish this
+	//TODO: 将结果集中的指针移动到下一条记录上
 	return false;
 }
 
@@ -33,24 +33,24 @@ bool next(ResultSet rs) {
  * 根据字段名从结果集中取出相应的字段
  */
 bool getBool(ResultSet rs, String name) {
-	//TODO: Finish this
+	//TODO: 根据结果集返回布尔值
 	return false;
 }
 
-char getchar(ResultSet rs, String name) {
-	//TODO: Finish this
+char getChar(ResultSet rs, String name) {
+	//TODO: 根据结果集返回字符值
 	return '0';
 }
 int getInt(ResultSet rs, String name) {
-	//TODO: Finish this
+	//TODO: 根据结果集返回整数值
 	return 0;
 }
 float getFloat(ResultSet rs, String name) {
-	//TODO: Finish this
+	//TODO: 根据结果集返回浮点值
 	return 0;
 }
 double getDouble(ResultSet rs, String name) {
-	//TODO: Finish this
+	//TODO: 根据结果集返回双精度值
 	return 0;
 }
 

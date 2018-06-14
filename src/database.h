@@ -36,7 +36,7 @@ typedef enum dbSignal {
 /**
  **表示数据库中的一个列
  **/
-typedef struct field Field;
+//typedef struct ifield Field;
 /**
  **错误信息，在数据库发生错误时给出信息
  **/
@@ -44,7 +44,7 @@ typedef char* ErrMsg;
 /**
  ** 要存储的数据
  **/
-typedef struct data Data;
+//typedef struct data Data;
 /**
  **数据记录的Rid 由系统生成
  **/
@@ -74,7 +74,7 @@ typedef String Condition;
  **/
 DBConn getConnection(String path);
 
-DBSignal open(DBConn conn,ErrMsg errMsg);
+DBSignal openDB(DBConn conn,ErrMsg errMsg);
 
 /**
  **创建一个数据表
@@ -94,8 +94,7 @@ DBSignal createTable(DBConn conn, String tableName, Field fields, ErrMsg errMsg)
  **@param errMsg 错误信息
  **@return 列的一个实例
  **/
-DBSignal getFieldByName(DBConn conn, String tableName, String fieldName,Field field,
-		ErrMsg errMsg);
+DBSignal getFieldByName(DBConn conn, String tableName, String fieldName,Field * field,ErrMsg errMsg);
 
 /**
  **为数据表添加一个字段
