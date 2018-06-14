@@ -15,6 +15,12 @@
 #include "resultset.h"
 #include "field.h"
 
+
+/**
+ *
+ */
+typedef char* Data;
+
 /**
  **  为数据库连接定义别名，想要使用数据库必须先拿到数据库的连接，
  **  对数据库的所有操作都需要传入一个数据库连接参数
@@ -25,7 +31,7 @@ typedef  struct conn DBConn;
  **是对操作结果的标识
  **/
 typedef enum dbSignal {
-	OPT_FAILED = -1, OPT_SUCCEED = 0,
+	OPT_FAILED = 0, OPT_SUCCEED = 1,
 } DBSignal;
 /**
  **表示数据库中的一个列
@@ -68,6 +74,8 @@ typedef String Condition;
  **/
 DBConn getConnection(String path);
 
+DBSignal open(DBConn conn,ErrMsg errMsg);
+
 /**
  **创建一个数据表
  **@param conn 通过getConnection获得的数据库连接
@@ -86,7 +94,7 @@ DBSignal createTable(DBConn conn, String tableName, Field fields, ErrMsg errMsg)
  **@param errMsg 错误信息
  **@return 列的一个实例
  **/
-Field getFieldByName(DBConn conn, String tableName, String fieldName,
+DBSignal getFieldByName(DBConn conn, String tableName, String fieldName,Field field,
 		ErrMsg errMsg);
 
 /**

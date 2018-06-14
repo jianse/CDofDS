@@ -10,6 +10,5 @@
 
 
 struct data {
-	int length;
 	char * data;
-} ;
+};

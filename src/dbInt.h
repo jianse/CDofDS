@@ -4,6 +4,7 @@
  *  Created on: 2018年6月14日
  *      Author: lee
  */
+#include <stdio.h>
 #ifndef true
 #define true 1
 #endif
