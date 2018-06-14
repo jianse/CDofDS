@@ -10,7 +10,7 @@
  **/
 
 #include "dbInt.h"
-#include "data.h"
+//#include "data.h"
 #include "rowSet.h"
 #include "resultset.h"
 #include "field.h"
