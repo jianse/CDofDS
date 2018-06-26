@@ -9,6 +9,12 @@
  * 数据库查询返回的 结果集
  */
 
+/*
+ * 测试开关
+ */
+#include "../testSwitch.h"
+
+
 #include "dbInt.h"
 
 typedef struct resultset ResultSet;
