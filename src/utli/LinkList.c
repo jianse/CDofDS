@@ -5,6 +5,11 @@
  *      Author: lee
  */
 
+/*
+ * 测试开关
+ */
+#include "../testSwitch.h"
+
 #include "LinkList.h"
 
 #ifndef _T
