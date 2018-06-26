@@ -4,6 +4,12 @@
  *  Created on: 2018年6月14日
  *      Author: lee
  */
+
+/*
+ * 测试开关
+ */
+#include "../testSwitch.h"
+
 /**
  * 定义数据表中的字段对象
  */
