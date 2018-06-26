@@ -1,7 +1,7 @@
 /*
  * StringUtil.c
  *
- *  Created on: 2018Äê6ÔÂ22ÈÕ
+ *  Created on: 2018å¹´6æœˆ22æ—¥
  *      Author: lee
  */
 
@@ -68,4 +68,11 @@ String m_subString(String s1,int start,int len) {
 		}
 	}
 	return str;
+}
+char charAt(String s1 ,int index){
+	if(strlen(s1)<=index){
+		return -1;
+	}else{
+		return *(s1+index);
+	}
 }

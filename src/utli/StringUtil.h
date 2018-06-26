@@ -1,7 +1,7 @@
 /*
  * StringUtil.h
  *
- *  Created on: 2018Äê6ÔÂ22ÈÕ
+ *  Created on: 2018ï¿½ï¿½6ï¿½ï¿½22ï¿½ï¿½
  *      Author: lee
  */
 
@@ -13,5 +13,6 @@ String m_strcpy(const String s2);
 int m_indexOf(String s1,String s2);
 int m_lastIndexOf(String s1,String s2);
 String m_subString(String s1,int start,int len);
+char charAt(int index);
 
 #endif /* STRINGUTIL_H_ */
