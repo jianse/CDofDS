@@ -9,12 +9,39 @@
  **本地数据库模型接口
  **/
 
+/*
+ * 测试开关
+ */
+#include "../testSwitch.h"
+
 #include "dbInt.h"
 //#include "data.h"
 #include "rowSet.h"
 #include "resultset.h"
-#include "field.h"
 
+
+
+
+
+
+
+typedef enum vtype {
+	Type_Bool, Type_Char, Type_Int, Type_Flout, Type_Double, Type_String/*128*/
+} Type;
+
+typedef struct ifield Field;
+
+typedef struct ifield {
+	String name;
+	Type type;
+	int length;
+} Field;
+
+typedef struct conn {
+	int connid;
+	String path;
+	bool isopen;
+} DBConn;
 
 /**
  *
@@ -25,7 +52,7 @@ typedef char* Data;
  **  为数据库连接定义别名，想要使用数据库必须先拿到数据库的连接，
  **  对数据库的所有操作都需要传入一个数据库连接参数
  **/
-typedef  struct conn DBConn;
+typedef struct conn DBConn;
 /**
  **对数据库的操作都会返回一个DBSignal枚举，
  **是对操作结果的标识
@@ -63,6 +90,12 @@ typedef char * String;
  */
 typedef String Condition;
 
+
+
+
+
+
+
 /**
  **定义对数据库表 及表结构的操作
  **/
@@ -70,11 +103,13 @@ typedef String Condition;
 /**
  **得到数据库连接
  **@param path 本地数据库绝对路径
- **@return 数据库连接
+ **@param conn 要获取的数据库连接指针
+ **@param errMsg 错误信息容器
+ **@return DBSignal 操作结果的标识
  **/
-DBConn getConnection(String path);
+DBSignal getConnection(String path,DBConn ** conn, ErrMsg * errMsg);
 
-DBSignal openDB(DBConn conn,ErrMsg errMsg);
+//DBSignal openDB(DBConn conn, ErrMsg errMsg);
 
 /**
  **创建一个数据表
@@ -84,7 +119,7 @@ DBSignal openDB(DBConn conn,ErrMsg errMsg);
  **@param errMsg 错误信息
  **@return DBSignal 操作结果的标识
  **/
-DBSignal createTable(DBConn conn, String tableName, Field fields, ErrMsg errMsg);
+DBSignal createTable(DBConn* conn, String tableName,int fieldsCount, Field * fields, ErrMsg * errMsg);
 
 /**
  **通过列名得到数据库表的一列的属性
@@ -94,7 +129,8 @@ DBSignal createTable(DBConn conn, String tableName, Field fields, ErrMsg errMsg)
  **@param errMsg 错误信息
  **@return 列的一个实例
  **/
-DBSignal getFieldByName(DBConn conn, String tableName, String fieldName,Field * field,ErrMsg errMsg);
+DBSignal getFieldByName(DBConn * conn, String tableName, String fieldName,
+		Field * field, ErrMsg * errMsg);
 
 /**
  **为数据表添加一个字段
@@ -104,7 +140,7 @@ DBSignal getFieldByName(DBConn conn, String tableName, String fieldName,Field * 
  **@param errMsg  错误信息
  **@return 操作信号
  **/
-DBSignal addField(DBConn conn, String tableName, Field field, ErrMsg errMsg);
+DBSignal addField(DBConn * conn, String tableName, Field field, ErrMsg * errMsg);
 
 /**
  **移除数据表的一个字段
@@ -114,7 +150,7 @@ DBSignal addField(DBConn conn, String tableName, Field field, ErrMsg errMsg);
  **@param errMsg 错误信息
  **@return 信号
  **/
-DBSignal removeField(DBConn conn, String tableName, Field field, ErrMsg errmsg);
+DBSignal removeField(DBConn * conn, String tableName, Field field, ErrMsg * errmsg);
 
 /**
  **删除表操作
@@ -123,7 +159,7 @@ DBSignal removeField(DBConn conn, String tableName, Field field, ErrMsg errmsg);
  **@param 错误信息
  **@return 信号
  **/
-DBSignal dropTable(DBConn conn, String tableName, ErrMsg errMsg);
+DBSignal dropTable(DBConn * conn, String tableName, ErrMsg * errMsg);
 
 /**
  **定义对数据的操作
@@ -137,7 +173,7 @@ DBSignal dropTable(DBConn conn, String tableName, ErrMsg errMsg);
  **@param errMsg 错误信息
  **@return 操作信号
  **/
-DBSignal insertRecord(DBConn conn, String tabelName, Data data, ErrMsg errMsg);
+DBSignal insertRecord(DBConn * conn, String tabelName, Data data, ErrMsg * errMsg);
 
 /**
  **删除记录
@@ -148,7 +184,7 @@ DBSignal insertRecord(DBConn conn, String tabelName, Data data, ErrMsg errMsg);
  **@return 操作信号
  **/
 DBSignal RemoveRecord(DBConn conn, String tableName, Condition conditions,
-		ErrMsg errMsg);
+		ErrMsg * errMsg);
 
 /**
  **更新记录，每次只能更新一张表的一个字段，如果要更新多个字段，需要多次调用
@@ -160,7 +196,7 @@ DBSignal RemoveRecord(DBConn conn, String tableName, Condition conditions,
  **@return 信号
  **/
 DBSignal UpdateRecord(DBConn conn, String tableName, Field field, Data value,
-		ErrMsg errMsg);
+		ErrMsg * errMsg);
 
 /**
  **查询记录，
@@ -172,5 +208,6 @@ DBSignal UpdateRecord(DBConn conn, String tableName, Field field, Data value,
  **@return 信号
  **/
 DBSignal SelectRecord(DBConn conn, String tableName, Condition conditions,
-		ResultSet resultSet, ErrMsg errMsg);
+		ResultSet resultSet, ErrMsg * errMsg);
+
 
