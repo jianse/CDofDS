@@ -90,9 +90,7 @@ bool findField(DBConn * conn,String tablename,String fieldName) {
 		fseek(fp_stru,i*42,SEEK_SET);
 		(fields+i)->name = malloc(sizeof(String)*33);
 		 fscanf(fp_stru,"%32s",(fields+i)->name);
-		 int t;
-		 fscanf(fp_stru,"%4d",&t);
-		 ((fields+i)->type)=(Type)t;
+		 fscanf(fp_stru,"%4d",&((fields+i)->type));
 		 fscanf(fp_stru,"%4d",&((fields+i)->length));
 	}
 	return false;
