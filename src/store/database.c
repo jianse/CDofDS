@@ -38,6 +38,11 @@ void writeDefaultMatadata();
 void mkdirs(String path);
 DBSignal openDB(DBConn * conn, ErrMsg * errMsg);
 DBSignal loadTableStructure(DBConn *conn,String tName,Fields** fields,ErrMsg * errMsg);
+DBSignal loadTable(DBConn * conn,String tName,ErrMsg *errMsg);
+
+DBSignal loadTable(DBConn * conn,String tName,ErrMsg *errMsg){
+	return false;
+}
 
 DBSignal loadTableStructure(DBConn *conn, String tName, Fields** fields, ErrMsg * errMsg) {
 	String fieldsPath = m_conbine(m_conbine(m_conbine(conn->path, "/"), tName),
