@@ -37,6 +37,13 @@ typedef struct ifield {
 	int length;
 } Field;
 
+
+typedef struct ifields Fields;
+typedef struct ifields {
+	int length;
+	Field * fields;
+} Fields;
+
 typedef struct conn {
 	int connid;
 	String path;

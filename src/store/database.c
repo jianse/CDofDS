@@ -37,6 +37,38 @@ void inner_removeTable(String tableName);
 void writeDefaultMatadata();
 void mkdirs(String path);
 DBSignal openDB(DBConn * conn, ErrMsg * errMsg);
+DBSignal loadTableStructure(DBConn *conn,String tName,Fields** fields,ErrMsg * errMsg);
+
+DBSignal loadTableStructure(DBConn *conn, String tName, Fields** fields, ErrMsg * errMsg) {
+	String fieldsPath = m_conbine(m_conbine(m_conbine(conn->path, "/"), tName),
+			"/.stru");
+	log(fieldsPath);
+	FILE * fp_stru = fopen(fieldsPath, "a+");
+	if (fp_stru == NULL) {
+		return false;
+	}
+	long flen = 0;
+	int fieldsCount = 0;
+	fseek(fp_stru, 0L, SEEK_END);
+	flen = ftell(fp_stru);
+
+	fieldsCount = flen / 42;
+	Field * tfields = malloc(sizeof(Field) * fieldsCount);
+	for (int i = 0; i < fieldsCount; i++) {
+		fseek(fp_stru, i * 42, SEEK_SET);
+		(tfields + i)->name = malloc(sizeof(String) * 33);
+		fscanf(fp_stru, "%32s", (tfields + i)->name);
+		int t;
+		fscanf(fp_stru, "%4d", &t);
+		((tfields + i)->type) = (Type) t;
+		fscanf(fp_stru, "%4d", &((tfields + i)->length));
+	}
+	Fields *f = malloc(sizeof(Fields));
+	f->length = fieldsCount;
+	f->fields = tfields;
+	*fields = f;
+	return true;
+}
 
 DBSignal getConnection(String path, DBConn **conn, ErrMsg * errMsg) {
 	if (strlen(path) == 0) {
@@ -74,8 +106,8 @@ DBSignal getConnection(String path, DBConn **conn, ErrMsg * errMsg) {
 
 bool findField(DBConn * conn,String tablename,String fieldName) {
 
-	//TODO: 实现寻找域的方法 COMPLETED
-	String fieldsPath = m_conbine(m_conbine(m_conbine(m_conbine(m_conbine(conn->path,"/"),tablename),"/"),fieldName),"/.stru");
+	//TODO: 实现寻找域的方法
+	String fieldsPath = m_conbine(m_conbine(m_conbine(conn->path,"/"),tablename),"/.stru");
 	FILE * fp_stru = fopen(fieldsPath,"a+");
 	if(fp_stru==NULL){
 		return false;
@@ -95,6 +127,7 @@ bool findField(DBConn * conn,String tablename,String fieldName) {
 		 ((fields+i)->type)=(Type)t;
 		 fscanf(fp_stru,"%4d",&((fields+i)->length));
 	}
+
 	return false;
 }
 
@@ -148,7 +181,7 @@ void mkdirs(String path) {
 }
 
 void writeDefaultMatadata() {
-	//TODO : 数据库原始信息的写入
+	//TODO : 数据库原始信息的写入 COMPLETED
 }
 
 DBSignal createTable(DBConn *conn, String tableName,int fieldsCount, Field * fields, ErrMsg * errMsg) {
@@ -172,7 +205,7 @@ DBSignal createTable(DBConn *conn, String tableName,int fieldsCount, Field * fie
 }
 
 void inner_createTable(DBConn * conn, String tableName,int fieldsCount, Field *fields) {
-	//TODO: 创建表的工作
+	//TODO: 创建表的工作 COMPLETED
 	String path = m_conbine(m_conbine(conn->path,"/"),tableName);
 	printf("%s",path);
 	mkdirs(path);
