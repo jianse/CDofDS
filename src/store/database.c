@@ -37,14 +37,14 @@ void inner_removeTable(String tableName);
 void writeDefaultMatadata();
 void mkdirs(String path);
 DBSignal openDB(DBConn * conn, ErrMsg * errMsg);
-DBSignal loadTableStructure(DBConn *conn,String tName,Fields** fields,ErrMsg * errMsg);
+DBSignal loadTableStructure(DBConn *conn,String tName,TableInfo** fields,ErrMsg * errMsg);
 DBSignal loadTable(DBConn * conn,String tName,ErrMsg *errMsg);
 
 DBSignal loadTable(DBConn * conn,String tName,ErrMsg *errMsg){
 	return false;
 }
 
-DBSignal loadTableStructure(DBConn *conn, String tName, Fields** fields, ErrMsg * errMsg) {
+DBSignal loadTableStructure(DBConn *conn, String tName, TableInfo** fields, ErrMsg * errMsg) {
 	String fieldsPath = m_conbine(m_conbine(m_conbine(conn->path, "/"), tName),
 			"/.stru");
 	log(fieldsPath);
@@ -68,8 +68,8 @@ DBSignal loadTableStructure(DBConn *conn, String tName, Fields** fields, ErrMsg 
 		((tfields + i)->type) = (Type) t;
 		fscanf(fp_stru, "%4d", &((tfields + i)->length));
 	}
-	Fields *f = malloc(sizeof(Fields));
-	f->length = fieldsCount;
+	TableInfo *f = malloc(sizeof(TableInfo));
+	f->fieldCount = fieldsCount;
 	f->fields = tfields;
 	*fields = f;
 	return true;
