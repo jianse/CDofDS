@@ -38,11 +38,14 @@ typedef struct ifield {
 } Field;
 
 
-typedef struct ifields Fields;
-typedef struct ifields {
-	int length;
+typedef struct tableInfo TableInfo;
+typedef struct tableInfo {
+	String path;
+	String tableName;
+	int fieldCount;	/* 字段数 */
 	Field * fields;
-} Fields;
+	int recordLength;
+} TableInfo;
 
 typedef struct conn {
 	int connid;
